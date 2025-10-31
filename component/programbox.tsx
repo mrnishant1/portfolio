@@ -5,7 +5,6 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -14,23 +13,26 @@ type ProgramboxProps = {
   title: string;
   innerElement?: React.ReactNode;
   setcurrentDiag: Dispatch<SetStateAction<BoxMap>>;
-//   isvisible:number;
+  active: string | null;
+  setactive: Dispatch<SetStateAction<string | null>>;
 };
 
 export default function Programbox({
   title,
   innerElement,
   setcurrentDiag,
-//   isvisible,
-}: ProgramboxProps) {
+  active,
+  setactive,
+}: //   isvisible,
+ProgramboxProps) {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const offsetRef = useRef({ x: 0, y: 0 }); // pointer offset inside the box
   const [dragging, setDragging] = useState(false);
   const [pos, setPos] = useState({ x: 200, y: 200 }); // initial position
-
   // start drag — compute offset between pointer and element's top-left
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!boxRef.current) return;
+    setactive(title);
     const rect = boxRef.current.getBoundingClientRect();
     offsetRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
     setDragging(true);
@@ -39,7 +41,6 @@ export default function Programbox({
   };
   useEffect(() => {
     if (!dragging) return;
-
     const handleMove = (e: MouseEvent) => {
       // compute new top-left by subtracting the stored offset
       setPos({
@@ -49,6 +50,7 @@ export default function Programbox({
     };
 
     const handleUp = () => {
+      setactive(null);
       setDragging(false);
       (document.body.style as any).userSelect = ""; // restore
     };
@@ -63,6 +65,7 @@ export default function Programbox({
     };
   }, [dragging]);
 
+
   return (
     <div
       ref={boxRef}
@@ -71,23 +74,25 @@ export default function Programbox({
         left: 0,
         top: 0,
         transform: `translate(${pos.x}px, ${pos.y}px)`,
+        zIndex: title === active ? 1 : 0,
         // minWidth: "45vw",
         // height: "60%",
-        
- 
       }}
       className="container border-2 border-gray-600 w-[50vw] h-[65%] flex flex-col overflow-hidden rounded-2xl bg-white "
     >
       <div
         onMouseDown={handleMouseDown}
-        className="bg-[#424242] h-[10%] w-full p-3 font-bold text-white text-2xl flex justify-between items-center cursor-grab"
+        className="bg-[#424242] h-[10%] w-full p-3 font-bold text-white text-2xl flex justify-between items-center cursor-grab "
         //grabbing cursor while dragging
-        style={{ userSelect: "none", touchAction: "none" as const }}
+        style={{
+          userSelect: "none",
+          touchAction: "none" as const,
+        }}
         onMouseUp={() => setDragging(false)}
       >
         <div>{title}</div>
         <div
-          className="cursor-pointer hover:scale-[1.1] active:scale-[0.95]"
+          className="cursor-pointer hover:scale-[1.1] active:scale-[0.95] z-0 active:z-10"
           onClick={() =>
             setcurrentDiag((prev) => ({
               ...prev,

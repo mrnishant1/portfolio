@@ -13,10 +13,13 @@ type DiagProps = {
 };
 
 function Diag({ currentDiag, setcurrentDiag }: DiagProps) {
+  const [active, setactive] = useState<string | null>(null);
   return (
     <>
       {Object.entries(currentDiag).map(([boxName, value]) => (
         (value===1&&<Programbox
+          active={active}
+          setactive={setactive}
           key={boxName}
           title={boxName}
           setcurrentDiag={setcurrentDiag}

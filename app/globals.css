@@ -4,3 +4,27 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+/* For Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 4px;                /* Scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;       /* Background track */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b5b5b5cc;       /* Scroll thumb color */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;          /* On hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #b5b5b5 #f1f1f1;
+}
