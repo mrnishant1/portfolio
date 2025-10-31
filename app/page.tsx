@@ -1,65 +1,94 @@
+"use client";
+import CustomContent from "@/component/customContent";
+import Programbox from "@/component/programbox";
 import Image from "next/image";
+import { useState } from "react";
+export type BoxMap = {
+  [key: string]: number;
+};
+
+type DiagProps = {
+  currentDiag: { [k: string]: number };
+  setcurrentDiag: React.Dispatch<React.SetStateAction<{ [k: string]: number }>>;
+};
+
+function Diag({ currentDiag, setcurrentDiag }: DiagProps) {
+  return (
+    <>
+      {Object.entries(currentDiag).map(([boxName, value]) => (
+        (value===1&&<Programbox
+          key={boxName}
+          title={boxName}
+          setcurrentDiag={setcurrentDiag}
+          innerElement={CustomContent({title:boxName})}
+        />)
+      ))}
+    </>
+  );
+}
 
 export default function Home() {
+  // const [currentTarget, setcurrentTarget] = useState<string | null>(null);
+  const buttons = ["About", "Links", "Work", "FAQ", "Contact"];
+  const buttonsImages = [
+    "about.png",
+    "links.png",
+    "work.png",
+    "faq.webp",
+    "contact.png",
+  ];
+  const [currentDiag, setcurrentDiag] = useState<BoxMap>({});
+  console.log(currentDiag);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <div className="bg-white w-svw h-svh flex justify-center items-center relative overflow-hidden">
+        <div className="border-2 border-gray-500 flex flex-col overflow-hidden rounded-2xl min-w-[40vw] h-[60%] relative">
+          <div className="bg-[#424242] h-[10%] w-full p-3 font-bold text-white text-2xl ">
+            Home
+          </div>
+          <div className="h-[90%] border-2 border-gray-400 rounded-b-2xl  w-full flex flex-col justify-center items-center gap-10">
+            <h1 className="lg:text-6xl md:text-4xl text-2xl ">
+              Hi!{" "}
+              <b className="font-bold cursive text-amber-500">i'm Nishant</b>
+            </h1>
+            <h2 className="text-gray-500 text-center">
+              Fullstack Developer, trying to be founder!
+            </h2>
+
+            <div className="flex gap-5">
+              {buttons.map((name, i) => (
+                <div key={name}>
+                  <button
+                    className="bg-transparent duration-250 cursor-pointer hover:scale-105 active:scale-90"
+                    onClick={(e) => {
+                      setcurrentDiag((prev) => ({
+                        ...prev,
+                        [name]: 1,
+                      }));
+                    }}
+                    name={name}
+                  >
+                    <div className="flex flex-col items-center">
+                      <Image
+                        alt={`icon for ${name}`}
+                        src={`/icon_${buttonsImages[i]}`}
+                        width={50}
+                        height={50}
+                        style={{ filter: `drop-shadow(3px 3px 0px gray)` }}
+                      />
+                      <div className="font-mono font-bold text-lg text-center text-gray ml-6 md:ml-0">
+                        {name.toLowerCase()}
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <Diag currentDiag={currentDiag} setcurrentDiag={setcurrentDiag} />
+      </div>
+    </>
   );
 }
