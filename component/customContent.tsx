@@ -11,7 +11,7 @@ const CustomContent = ({ title }: { title: string }) => {
       {title === "About" && <About />}
       {title === "Links" && <Links />}
       {title === "Work" && <Work />}
-      {title === "FAQ" && <div></div>}
+      {title === "QnA" && <div></div>}
       {title === "Contact" && <Contact />}
     </>
   );
@@ -52,7 +52,7 @@ function About() {
 
             <div className="space-y-3">
               <h1>GitHub stats:</h1>
-              <GitHubCalendar
+             <GitHubCalendar
                 username="mrnishant1"
                 blockSize={15}
                 blockMargin={5}
@@ -61,7 +61,8 @@ function About() {
                 year={2025}
                 blockRadius={4}
                 weekStart={6}
-                totalCount={97}
+                // totalCount={97}
+                loading={false}
               />
               <div className="flex flex-col items-center justify-center">
                 <img

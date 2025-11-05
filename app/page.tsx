@@ -16,23 +16,26 @@ function Diag({ currentDiag, setcurrentDiag }: DiagProps) {
   const [active, setactive] = useState<string | null>(null);
   return (
     <>
-      {Object.entries(currentDiag).map(([boxName, value]) => (
-        (value===1&&<Programbox
-          active={active}
-          setactive={setactive}
-          key={boxName}
-          title={boxName}
-          setcurrentDiag={setcurrentDiag}
-          innerElement={CustomContent({title:boxName})}
-        />)
-      ))}
+      {Object.entries(currentDiag).map(
+        ([boxName, value]) =>
+          value === 1 && (
+            <Programbox
+              active={active}
+              setactive={setactive}
+              key={boxName}
+              title={boxName}
+              setcurrentDiag={setcurrentDiag}
+              innerElement={CustomContent({ title: boxName })}
+            />
+          )
+      )}
     </>
   );
 }
 
 export default function Home() {
   // const [currentTarget, setcurrentTarget] = useState<string | null>(null);
-  const buttons = ["About", "Links", "Work", "FAQ", "Contact"];
+  const buttons = ["About", "Links", "Work", "QnA", "Contact"];
   const buttonsImages = [
     "about.png",
     "links.png",
@@ -44,54 +47,58 @@ export default function Home() {
   console.log(currentDiag);
 
   return (
-    <>
-      <div className="bg-white w-svw h-svh flex justify-center items-center relative overflow-hidden">
-        <div className="border-2 border-gray-500 flex flex-col overflow-hidden rounded-2xl min-w-[40vw] h-[60%] relative">
-          <div className="bg-[#424242] h-[10%] w-full p-3 font-bold text-white text-2xl ">
-            Home
-          </div>
-          <div className="h-[90%] border-2 border-gray-400 rounded-b-2xl  w-full flex flex-col justify-center items-center gap-10">
-            <h1 className="lg:text-6xl md:text-4xl text-2xl ">
-              Hi!{" "}
-              <b className="font-bold cursive text-amber-500">i'm Nishant</b>
-            </h1>
-            <h2 className="text-gray-500 text-center">
-              Fullstack Developer, trying to be founder!
-            </h2>
+    <> 
+        <div
+          className="bg-[wheat] w-svw h-svh flex justify-center items-center relative overflow-hidden z-20"
+          // style={{}}
+        >
+          <div className="bg-[#ffffff6a] backdrop-blur-2xl border-2 border-gray-500 flex flex-col overflow-hidden rounded-2xl min-w-[40vw] h-[60%] relative">
+            <div className="bg-[#424242] h-[10%] w-full p-3 font-bold text-white text-2xl ">
+              Home
+            </div>
+            <div className="h-[90%] border-2 border-gray-400 rounded-b-2xl  w-full flex flex-col justify-center items-center gap-10">
+              <h1 className="lg:text-6xl md:text-4xl text-2xl ">
+                Hi!{" "}
+                <b className="font-bold cursive text-amber-500">i'm Nishant</b>
+              </h1>
+              <h2 className="text-gray-500 text-center">Fullstack Developer</h2>
 
-            <div className="flex gap-5">
-              {buttons.map((name, i) => (
-                <div key={name}>
-                  <button
-                    className="bg-transparent duration-250 cursor-pointer hover:scale-105 active:scale-90"
-                    onClick={(e) => {
-                      setcurrentDiag((prev) => ({
-                        ...prev,
-                        [name]: 1,
-                      }));
-                    }}
-                    name={name}
-                  >
-                    <div className="flex flex-col items-center">
-                      <Image
-                        alt={`icon for ${name}`}
-                        src={`/icon_${buttonsImages[i]}`}
-                        width={50}
-                        height={50}
-                        style={{ filter: `drop-shadow(3px 3px 0px gray)` }}
-                      />
-                      <div className="font-mono font-bold text-lg text-center text-gray ml-6 md:ml-0">
-                        {name.toLowerCase()}
+              <div className="flex gap-5">
+                {buttons.map((name, i) => (
+                  <div key={name}>
+                    <button
+                      className="bg-transparent duration-250 cursor-pointer hover:scale-105 active:scale-90"
+                      onClick={(e) => {
+                        setcurrentDiag((prev) => ({
+                          ...prev,
+                          [name]: 1,
+                        }));
+                      }}
+                      name={name}
+                    >
+                      <div className="flex flex-col items-center">
+                        <Image
+                          alt={`icon for ${name}`}
+                          src={`/icon_${buttonsImages[i]}`}
+                          width={50}
+                          height={50}
+                          style={{ filter: `drop-shadow(3px 3px 0px gray)` }}
+                        />
+                        <div className="font-mono font-bold text-lg text-center text-gray ml-6 md:ml-0">
+                          {name.toLowerCase() === "qna"
+                            ? "QnA"
+                            : name.toLocaleLowerCase()}
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                </div>
-              ))}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+          <Diag currentDiag={currentDiag} setcurrentDiag={setcurrentDiag} />
         </div>
-        <Diag currentDiag={currentDiag} setcurrentDiag={setcurrentDiag} />
-      </div>
+
     </>
   );
 }
