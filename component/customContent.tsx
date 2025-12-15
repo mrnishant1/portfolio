@@ -52,7 +52,7 @@ function About() {
 
             <div className="space-y-3">
               <h1>GitHub stats:</h1>
-             <GitHubCalendar
+              <GitHubCalendar
                 username="mrnishant1"
                 blockSize={15}
                 blockMargin={5}
@@ -237,20 +237,19 @@ function About() {
 
             <div className="space-y-3 text-start">
               <h2 className="text-2xl font-semibold text-gray-900">Hobbies</h2>
-              <p>
-                Music, late-night debugging sessions, exploring indie tech
-                projects, and occasionally sketching UI ideas that never see
-                production.
-              </p>
+              Music <br /> Games 
+              <br /> sketching late-night debugging sessions,
+              <br />
+              exploring own Ideas that never hit production.
             </div>
             <div className="space-y-3 text-start">
               <h2 className="text-2xl font-semibold text-gray-900">
                 Education
               </h2>
-              <p>
-                <ol>College: APJ Abdul Kalam technical university(AKTU)</ol>
-                <ol>Pursuing: Bachelor of technology in Computer Science</ol>
-              </p>
+              
+                <ol><b>College:</b> APJ Abdul Kalam technical university(AKTU)</ol>
+                <ol><b>Pursuing:</b> Bachelor of technology in Computer Science</ol>
+              
             </div>
           </div>
         </div>
